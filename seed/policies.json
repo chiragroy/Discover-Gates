@@ -1,0 +1,58 @@
+{
+  "name": "Gatehouse Global Professional Conduct & Data Protection Policy (v2026.1)",
+  "source_text": "Standard corporate data governance and legal ethics guidelines for professional service practitioners.",
+  "rules": [
+    {
+      "kind": "sensitive_pattern",
+      "pattern": "\\b\\d{4}[-\\s]?\\d{4}[-\\s]?\\d{4}\\b",
+      "message": "Unmasked payment card or bank account number (Format: 4521-8890-2211)"
+    },
+    {
+      "kind": "sensitive_pattern",
+      "pattern": "\\b[A-Z]{5}[0-9]{4}[A-Z]\\b",
+      "message": "Permanent Account Number (PAN) identifier"
+    },
+    {
+      "kind": "sensitive_pattern",
+      "pattern": "\\b\\d{4}\\s\\d{4}\\s\\d{4}\\b",
+      "message": "National UID / Aadhaar identification sequence"
+    },
+    {
+      "kind": "sensitive_pattern",
+      "pattern": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+      "message": "Unmasked Social Security Number (SSN)"
+    },
+    {
+      "kind": "blocked_topic",
+      "pattern": "\\b(insider\\s+trading|brib(?:e|ery)|evade\\s+sanctions|shred\\s+audit\\s+workpapers|launder\\s+funds)\\b",
+      "message": "Prohibited unethical topic (FCPA, AML, or securities fraud compliance violation)"
+    }
+  ],
+  "clauses": [
+    {
+      "text": "Drafting and analysis of commercial agreements is permitted for internal working purposes, provided that no work product is submitted to a court, arbitral tribunal, or regulatory agency without prior review and sign-off by a qualified partner.",
+      "action": "conditional",
+      "note": "Permitted for drafting, not for filing without partner review"
+    },
+    {
+      "text": "Automated drafting of formal legal opinion letters, solvency certificates, or statutory tax certifications is strictly restricted. Any such materials must undergo independent partner peer review before issuance.",
+      "action": "conditional",
+      "note": "Formal opinion drafting requires two-partner concurrence before distribution"
+    },
+    {
+      "text": "Transmitting, pasting, or processing unmasked client bank accounts, wire routing details, or private cryptographic keys into LLM prompts is strictly prohibited.",
+      "action": "prohibit",
+      "note": "Prohibition on transmitting unmasked banking and account credentials"
+    },
+    {
+      "text": "Advising on structures specifically designed to conceal beneficial ownership, evade economic sanctions, or circumvent statutory tax reporting regimes is strictly prohibited.",
+      "action": "prohibit",
+      "note": "Prohibition on sanctions evasion and illegal tax shelter facilitation"
+    },
+    {
+      "text": "Summarization of publicly filed case law, statutory provisions, standard market covenants, or accounting standard updates is permitted without restriction.",
+      "action": "permit",
+      "note": "Permitted: Public legal and regulatory research"
+    }
+  ]
+}

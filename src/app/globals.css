@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #FBFBF9;
+  --ink: #15181C;
+  --ink-muted: #575D65;
+  --rule: #E2E0DA;
+  --rule-light: #ECEAE4;
+  --avoided-green: #2F6B4F;
+  --conditional-amber: #9A6B18;
+  --block-red: #8F2C27;
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.font-reading {
+  font-family: "Georgia", "Cambria", "Times New Roman", serif;
+  line-height: 1.68;
+}
+
+/* Hairline border rule utility */
+.hairline-b {
+  border-bottom: 1px solid var(--rule);
+}
+.hairline-t {
+  border-top: 1px solid var(--rule);
+}
+.hairline-r {
+  border-right: 1px solid var(--rule);
+}
+.hairline-l {
+  border-left: 1px solid var(--rule);
+}
+.hairline {
+  border: 1px solid var(--rule);
+}
