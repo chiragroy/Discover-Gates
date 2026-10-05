@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db from '@/lib/db';
-import { executeModelCall } from '@/lib/gemini';
+import { executeModelCall } from '@/lib/providers';
 import { Tier } from '@/config/pricing';
 import crypto from 'crypto';
 

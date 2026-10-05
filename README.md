@@ -63,17 +63,19 @@ Every gate runs on local compute only: deterministic rules, regex, local embeddi
 
 ---
 
-## 4. Tiers and Pricing Configuration
+## 4. Tiers, Pricing, and Provider Configuration
 
-Pricing lives in `src/config/pricing.ts`:
+Each tier (Fast/Standard/Deep) is served by whichever provider `MODEL_PROVIDER` selects (`gemini` | `claude` | `openai`, default `gemini`). Provider adapters live in `src/lib/providers/`; per-provider tier→model mappings and pricing live in `src/config/pricing.ts`.
 
-| Tier | Gemini Model | Max Output | Input / Output per 1M Tokens |
+| Tier | Gemini | Claude | OpenAI |
 |---|---|---|---|
-| **Fast** | `gemini-3.5-flash-lite` | 1,024 | \$0.075 / \$0.30 |
-| **Standard** | `gemini-3.8-flash` | 2,048 | \$0.15 / \$0.60 |
-| **Deep** | `gemini-3.1-pro-preview` | 4,096 | \$1.25 / \$5.00 |
+| **Fast** | `gemini-3.5-flash-lite` | `claude-haiku-4-5` | `gpt-5-mini` |
+| **Standard** | `gemini-3.8-flash` | `claude-sonnet-5-5` | `gpt-5` |
+| **Deep** | `gemini-3.1-pro-preview` | `claude-opus-5-5` | `gpt-5-pro` |
 
-*Includes an offline simulated mock engine when `GEMINI_API_KEY` is not present, allowing full local demonstration without API keys.*
+Model IDs and per-token rates are illustrative placeholders — verify/update them against your actual provider account in `src/config/pricing.ts` before relying on real pricing.
+
+Copy `.env.example` to `.env.local` and set `MODEL_PROVIDER` plus the matching API key. *Any tier with no API key configured for its provider falls back to an offline simulated mock engine, allowing full local demonstration without API keys.*
 
 ---
 
@@ -95,7 +97,20 @@ Use the 1-click **Demo Presets** in the composer bar:
 
 ---
 
-## 6. Honest Limitations
+## 6. Policy Administration
+
+The `/policy` page lets you replace Gate 1's rules and clauses without editing code:
+
+1. Upload a PDF of your actual company AI usage / data-privacy policy.
+2. The extracted text is sent to whichever model provider is configured (tier: Deep) with a prompt that drafts candidate `rules` (regex-based) and `clauses` (semantic, each tagged `prohibit` / `conditional` / `permit`) matching the schema in `seed/policies.json`.
+3. **Nothing goes live on upload.** The draft is editable in the browser — add, edit, or delete any rule or clause — before you click Publish.
+4. Publishing deactivates the previously active policy and atomically activates the new one. Gate 1 (`src/gates/policy.ts`) only ever reads rules/clauses belonging to the single active policy row.
+
+Regex patterns are flagged as drafts because Gate 1 is the only gate that fails **closed** — a wrong pattern has real compliance consequences, so review before publishing rather than trusting the extraction blindly.
+
+---
+
+## 7. Honest Limitations
 
 * **No Multi-Tenant Auth:** Single-user session model scoped to local SQLite database.
 * **Seed Classification Scope:** The routing classifier is trained on 161 hand-labelled legal/accounting prompts, not an external academic benchmark.
@@ -104,7 +119,7 @@ Use the 1-click **Demo Presets** in the composer bar:
 
 ---
 
-## 7. Development & Verification
+## 8. Development & Verification
 
 ```bash
 # 1. Warm local embedding model

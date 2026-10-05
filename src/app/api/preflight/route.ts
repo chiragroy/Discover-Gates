@@ -25,8 +25,13 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 1. Fast regex check for sensitive data & blocked topics
-    const rules = db.prepare(`SELECT kind, pattern, message FROM policy_rules`).all() as PolicyRuleRow[];
+    // 1. Fast regex check for sensitive data & blocked topics (active policy only)
+    const rules = db.prepare(`
+      SELECT r.kind, r.pattern, r.message
+      FROM policy_rules r
+      JOIN policies p ON p.id = r.policy_id
+      WHERE p.is_active = 1
+    `).all() as PolicyRuleRow[];
     for (const rule of rules) {
       try {
         const regex = new RegExp(rule.pattern, 'i');

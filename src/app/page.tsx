@@ -6,7 +6,7 @@ import { ConversationView, ChatMessage } from '@/components/ConversationView';
 import { Composer } from '@/components/Composer';
 import { LedgerRail } from '@/components/LedgerRail';
 import { ChainExecutionSummary } from '@/types/gate';
-import { CallResult } from '@/lib/gemini';
+import { CallResult } from '@/lib/providers';
 
 export default function Home() {
   const [matters, setMatters] = useState<Matter[]>([]);

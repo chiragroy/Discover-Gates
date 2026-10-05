@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ChainExecutionSummary } from '@/types/gate';
-import { CallResult } from '@/lib/gemini';
+import { CallResult } from '@/lib/providers';
 
 interface TechnicalDrawerProps {
   summary?: ChainExecutionSummary | null;

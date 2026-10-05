@@ -1,5 +1,8 @@
 'use client';
 
+import Link from 'next/link';
+import { ShieldCheck } from 'lucide-react';
+
 export interface Matter {
   id: string;
   code: string;
@@ -36,13 +39,22 @@ export function MatterSelector({ matters, selectedMatterId, onSelectMatter }: Ma
         </div>
       </div>
 
-      {current && (
-        <div className="text-xs text-[#575D65] font-medium hidden sm:block">
-          <span className="text-[#15181C]">{current.title}</span>
-          <span className="mx-2 text-[#E2E0DA]">|</span>
-          <span>Cap: ${(current.cap_micro / 1_000_000).toFixed(2)}</span>
-        </div>
-      )}
+      <div className="flex items-center gap-3">
+        {current && (
+          <div className="text-xs text-[#575D65] font-medium hidden sm:block">
+            <span className="text-[#15181C]">{current.title}</span>
+            <span className="mx-2 text-[#E2E0DA]">|</span>
+            <span>Cap: ${(current.cap_micro / 1_000_000).toFixed(2)}</span>
+          </div>
+        )}
+        <Link
+          href="/policy"
+          className="flex items-center gap-1.5 text-xs text-[#575D65] hover:text-[#15181C] transition-colors"
+        >
+          <ShieldCheck size={14} />
+          <span>Policy</span>
+        </Link>
+      </div>
     </div>
   );
 }

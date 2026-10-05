@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import db, { float32ArrayToBuffer } from '@/lib/db';
 import { executeGateChain } from '@/lib/gate-runner';
-import { executeModelCall } from '@/lib/gemini';
+import { executeModelCall } from '@/lib/providers';
 import { Envelope } from '@/types/gate';
 import crypto from 'crypto';
 

@@ -27,8 +27,13 @@ export const PolicyGate: Gate = {
     const db = ctx.db as Database.Database;
     const text = env.text;
 
-    // 1. Sensitive-data regex & blocked rules
-    const rules = db.prepare(`SELECT kind, pattern, message FROM policy_rules`).all() as PolicyRuleRow[];
+    // 1. Sensitive-data regex & blocked rules (active policy only)
+    const rules = db.prepare(`
+      SELECT r.kind, r.pattern, r.message
+      FROM policy_rules r
+      JOIN policies p ON p.id = r.policy_id
+      WHERE p.is_active = 1
+    `).all() as PolicyRuleRow[];
     for (const rule of rules) {
       try {
         const regex = new RegExp(rule.pattern, 'i');
@@ -53,9 +58,12 @@ export const PolicyGate: Gate = {
       }
     }
 
-    // 2. Clause similarity check
+    // 2. Clause similarity check (active policy only)
     const clauses = db.prepare(`
-      SELECT id, text, action, note, embedding FROM policy_clauses WHERE embedding IS NOT NULL
+      SELECT c.id, c.text, c.action, c.note, c.embedding
+      FROM policy_clauses c
+      JOIN policies p ON p.id = c.policy_id
+      WHERE p.is_active = 1 AND c.embedding IS NOT NULL
     `).all() as PolicyClauseRow[];
 
     if (clauses.length > 0) {

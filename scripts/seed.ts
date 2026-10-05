@@ -31,8 +31,8 @@ async function seed() {
 
   const policyId = crypto.randomUUID();
   db.prepare(`
-    INSERT INTO policies (id, name, source_text)
-    VALUES (?, ?, ?)
+    INSERT INTO policies (id, name, source_text, is_active)
+    VALUES (?, ?, ?, 1)
   `).run(policyId, policyData.name, policyData.source_text);
 
   const insertRule = db.prepare(`

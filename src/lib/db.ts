@@ -45,6 +45,9 @@ db.exec(`
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     source_text TEXT NOT NULL,
+    -- Exactly one policy is active at a time; uploading a new one deactivates the rest.
+    -- Gate 1 (Policy) only reads rules/clauses belonging to the active policy.
+    is_active INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
@@ -83,6 +86,7 @@ db.exec(`
     message_id TEXT NOT NULL,
     model TEXT NOT NULL,
     tier TEXT NOT NULL,
+    provider TEXT NOT NULL DEFAULT 'gemini', -- 'gemini' | 'claude' | 'openai'
     input_tokens INTEGER NOT NULL,
     cache_read_tokens INTEGER NOT NULL DEFAULT 0,
     output_tokens INTEGER NOT NULL,

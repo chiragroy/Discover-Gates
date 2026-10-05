@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { ChainExecutionSummary, Verdict } from '@/types/gate';
-import { CallResult } from '@/lib/gemini';
+import { CallResult } from '@/lib/providers';
 import { formatMicroDollars } from '@/config/pricing';
 import { TechnicalDrawer } from '@/components/TechnicalDrawer';
 import { ThisMonthTab } from '@/components/ThisMonthTab';

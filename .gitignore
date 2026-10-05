@@ -32,6 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# local SQLite database (holds uploaded policy text and chat history; rebuild with `npm run seed`)
+/data/
+
+# per-user Claude Code settings
+.claude/settings.local.json
 
 # vercel
 .vercel
